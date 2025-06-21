@@ -25,8 +25,9 @@ public class EisenhowerUserEntity implements UserDetails {
     @Getter @Setter
     UUID id;
 
-    @OneToMany(mappedBy = "id")
-    private Set<BoardEntity> boards;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Builder.Default
+    private Set<BoardEntity> boards = new HashSet<>();
 
     @NotEmpty
     @Column(unique = true)

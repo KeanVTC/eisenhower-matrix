@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,8 +23,9 @@ public class BoardEntity {
     @Getter @Setter
     private EisenhowerUserEntity user;
 
-    @OneToMany(mappedBy = "id")
-    private Set<NoteEntity> notes;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Builder.Default
+    private Set<NoteEntity> notes = new HashSet<>();
 
     @Getter @Setter
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
