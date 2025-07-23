@@ -15,10 +15,7 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                sh '''
-                    rm -rf target
-                    mvn clean package -DskipTests
-                '''
+                sh 'mvn package -DskipTests' // ⬅️ Removed 'clean'
             }
         }
 
