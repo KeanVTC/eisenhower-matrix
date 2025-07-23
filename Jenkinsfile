@@ -15,7 +15,8 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                sh 'mvn package -DskipTests' // ⬅️ Removed 'clean'
+                // No 'clean' to avoid deletion issues
+                sh 'mvn package -DskipTests'
             }
         }
 
