@@ -1,0 +1,11 @@
+# Use a base image that has Java 17
+FROM eclipse-temurin:17-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the built JAR file into the image
+COPY target/*.jar app.jar
+
+# Set the entrypoint to run the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]
