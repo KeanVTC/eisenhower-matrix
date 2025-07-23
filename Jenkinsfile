@@ -12,11 +12,15 @@ pipeline {
             }
         }
 
-        stage('Build Backend') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
+stage('Build Backend') {
+    steps {
+        sh '''
+            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+            export PATH=$JAVA_HOME/bin:$PATH
+            mvn clean package -DskipTests
+        '''
+    }
+}
 
         stage('Run Unit Tests') {
             steps {
