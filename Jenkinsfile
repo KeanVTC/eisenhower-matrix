@@ -6,12 +6,12 @@ pipeline {
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
-stage('Checkout') {
-    steps {
-        git branch: 'main', url: 'https://github.com/KeanVTC/eisenhower-matrix.git'
-    }
-}
-
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/KeanVTC/eisenhower-matrix.git'
+            }
+        }
 
         stage('Build Backend') {
             steps {
