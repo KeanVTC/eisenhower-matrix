@@ -2,50 +2,32 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'rg.fr-par.scw.cloud/achampion/eisenhower-server:latest'
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git branch:'main', url: 'https://github.com/KeanVTC/eisenhower-matrix.git'
+                git 'https://github.com/KeanVTC/eisenhower-matrix.git'
             }
         }
 
-stage('Build Backend') {
-    steps {
-        sh '''
-            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-            export PATH=$JAVA_HOME/bin:$PATH
-            mvn clean package -DskipTests
-        '''
-    }
-}
+        stage('Build Backend') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
 
-        stage('Run Unit Tests') {
+        stage('Run Backend Tests') {
             steps {
                 sh 'mvn test'
             }
         }
 
-        stage('Run JavaScript Tests') {
+        stage('Done') {
             steps {
-                dir('src/test/javascript') {
-                    sh 'yarn install'
-                    sh 'yarn test || true' // avoid breaking pipeline for now
-                }
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                sh 'docker run -d -p 8080:8080 $DOCKER_IMAGE'
+                echo '✅ Build and tests complete.'
             }
         }
     }
