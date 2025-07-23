@@ -121,15 +121,19 @@
                     </excludes>
                 </configuration>
                 <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-image</goal>
-                        </goals>
-                        <configuration>
-                            <imageName>rg.fr-par.scw.cloud/achampion/eisenhower-server:latest</imageName>
-                        </configuration>
-                    </execution>
-                </executions>
+    <!-- Disabled build-image to avoid Docker permission issues in Jenkins -->
+    <!--
+    <executions>
+        <execution>
+            <goals>
+                <goal>build-image</goal>
+            </goals>
+            <configuration>
+                <imageName>rg.fr-par.scw.cloud/achampion/eisenhower-server:latest</imageName>
+            </configuration>
+        </execution>
+    </executions>
+    -->
             </plugin>
 
             <plugin>
