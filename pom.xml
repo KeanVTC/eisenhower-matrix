@@ -98,80 +98,67 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!-- Native image is too unstable for now
-                        https://dev.to/sabyasachi/spring-boot-3-meets-graal-native-image-138n
-                    <image>
-                        <builder>paketo-buildpacks/java-native-image</builder>
-                        <env>
-                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                        </env>
-                    </image>
-                    -->
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-    <!-- Disabled build-image to avoid Docker permission issues in Jenkins -->
-    <!--
-    <executions>
-        <execution>
-            <goals>
-                <goal>build-image</goal>
-            </goals>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
-                <imageName>rg.fr-par.scw.cloud/achampion/eisenhower-server:latest</imageName>
+                <excludes>
+                    <exclude>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                    </exclude>
+                </excludes>
             </configuration>
-        </execution>
-    </executions>
-    -->
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.12.1</version>
-
-                <executions>
-                    <execution>
-                        <id>Install local node and yarn</id>
-                        <goals>
-                            <goal>install-node-and-yarn</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>Install node dependencies</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>Running JS tests</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>test</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <nodeVersion>v18.12.1</nodeVersion>
-                    <yarnVersion>v1.22.19</yarnVersion>
-                    <workingDirectory>src/test/javascript</workingDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+            <!-- Disabled build-image to avoid Docker permission issues in Jenkins -->
+            <!-- <executions> 
+                <execution>
+                    <goals>
+                        <goal>build-image</goal>
+                    </goals>
+                    <configuration>
+                        <imageName>rg.fr-par.scw.cloud/achampion/eisenhower-server:latest</imageName>
+                    </configuration>
+                </execution>
+            </executions> -->
+        </plugin>
+        
+        <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>1.12.1</version>
+            <executions>
+                <execution>
+                    <id>Install local node and yarn</id>
+                    <goals>
+                        <goal>install-node-and-yarn</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>Install node dependencies</id>
+                    <goals>
+                        <goal>yarn</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>Running JS tests</id>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>yarn</goal>
+                    </goals>
+                    <configuration>
+                        <arguments>test</arguments>
+                    </configuration>
+                </execution>
+            </executions>
+            <configuration>
+                <nodeVersion>v18.12.1</nodeVersion>
+                <yarnVersion>v1.22.19</yarnVersion>
+                <workingDirectory>src/test/javascript</workingDirectory>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 </project>
